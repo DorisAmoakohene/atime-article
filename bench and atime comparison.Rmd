@@ -1,0 +1,161 @@
+---
+title: "bench and atime"
+author: "Doris Amoakohene"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+bench::press and atime::atime
+
+
+
+```{r}
+library(atime)
+library(bench)
+
+```
+
+
+
+```{r}
+max.N <- 20
+(subject.size.vec <- unique(as.integer(10^seq(0, log10(max.N), l = 20))))
+create_subject_pattern <- function(N)list(
+  subject=paste(rep("a", N), collapse = ""),
+  pattern=paste(rep(c("a?", "a"), each = N), collapse = ""))
+
+perl.values <- c(TRUE,FALSE)
+
+empirical_comparison_bench_press <- bench::press(
+  N = subject.size.vec,                 
+  perl = perl.values,
+  with(create_subject_pattern(N), bench::mark(
+    iterations = 10,
+    regexpr(pattern, subject, perl = perl))))
+
+library(ggplot2)
+
+png("empirical_comparison_bench_press.png",res = 300, width = 5, height = 3, unit = "in")
+gg <- ggplot()+
+  geom_line(aes(
+    N, as.numeric(median), color=perl),
+    data=empirical_comparison_bench_press)+
+  scale_x_log10(limits=c(NA,max.N*2))+
+  scale_y_log10("Computation Time (seconds)")+
+  ggtitle(sprintf("Empirical comparison result with bench::press"))
+directlabels::direct.label(gg,"right.polygons")
+dev.off()
+```
+
+
+```{r}
+empirical_comparison_atime <- atime::atime(
+  N = subject.size.vec,
+  setup=N.data <- create_subject_pattern(N),
+  expr.list=atime::atime_grid(list(
+    perl=perl.values),
+    regexpr=regexpr(N.data$pattern, N.data$subject, perl = perl)))
+
+
+```
+
+
+
+
+
+
+
+```{r}
+empirical_comparison_atime$unit.col.vec<-c(seconds = "median")
+
+png("empirical_comparison_atime.png",res = 300, width = 5, height = 3, unit = "in")
+plot(empirical_comparison_atime)+
+  scale_y_log10("Computation Time (seconds)")+
+  ggtitle(sprintf("Empirical comparison result with atime"))+
+  facet_null()
+dev.off()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+png("empirical_comparison_atime.png",res = 300, width = 5, height = 3, unit = "in")
+dd <- ggplot()+
+  geom_line(aes(
+    N, as.numeric(median), color=expr.name),
+    data=empirical_comparison_atime$measurements)+
+  scale_x_log10(limits=c(NA,max.N*2))+
+  scale_y_log10()
+directlabels::direct.label(dd, list(cex = 0.8, "right.polygons"))
+dev.off()
+```
+
+
+```{r}
+directlabels::direct.label(k, list(cex = 0.8, "right.polygons"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+library(ggplot2)
+library(directlabels)
+
+# Assuming gg is your plot object
+gg <- plot(empirical_comparison_atime)
+
+# Add direct labels to the plot
+gg <- gg + geom_dl(aes(label = perl.values), method = "last.points")
+
+# Remove the legend
+gg <- gg + theme(legend.position = "none")
+
+# Save the plot
+ggsave("empirical_comparison_atime.png", plot = gg, width = 5, height = 5, dpi = 300)
+
+```
+
+
+```{r}
+plot(empirical_comparison_atime)
+
+png("empirical_comparison_atime",res = 300, width = 5, height = 3, unit = "in")
+plot(empirical_comparison_atime)
+dev.off()
+
+```
+
+
+```{r}
+
+```
+
+
+
+
+

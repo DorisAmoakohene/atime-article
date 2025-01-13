@@ -1,0 +1,104 @@
+---
+title: "Codes_For_Paper"
+author: "Doris Amoakohene"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+
+```{r}
+
+library(atime)
+library(ggplot2)
+library(data.table)
+library(directlabels)
+library(dplyr)
+```
+
+
+```{r, warning=FALSE}
+#subject.size.vec <- unique(as.integer(10^seq(0, 2, length.out = 100)))
+subject.size.vec <- unique(as.integer(10^seq(0,2,l=100)))
+
+subject.size.vec
+```
+
+
+```{r, warning=FALSE}
+
+atime.list <- atime::atime(
+  N=subject.size.vec,
+  setup={
+    subject <- paste(rep("a", N), collapse="")
+    pattern <- paste(rep(c("a?", "a"), each=N), collapse="")
+  },
+  times=10,
+  PCRE = regexpr(pattern, subject, perl=TRUE),
+  TRE = regexpr(pattern, subject, perl=FALSE)
+  )
+
+atime.list
+```
+
+
+```{r}
+#atime.list$measurements$kilobytes = NA
+atime.list$unit.col.vec<-c(seconds = "median")
+
+png("atime.list.png",res = 300, width = 5, height = 3, unit = "in")
+plot(atime.list)+
+  scale_y_log10("Computation Time (seconds)")+
+  facet_null()
+dev.off()
+```
+
+```{r}
+
+best.list <- atime::references_best(atime.list)
+
+best.list$measurements = best.list$measurements[unit == "seconds"]
+
+d = plot(best.list) + 
+  scale_y_log10("Computation Time (seconds)") +
+  facet_wrap(~ expr.name, labeller = labeller(expr.name = function(x) gsub("seconds", "", x)))
+  
+ggsave("best.list.plot.png", plot = d, width = 5, height = 3, unit = "in", dpi = 300)
+```
+
+
+```{r}
+pred.list <- predict(best.list, seconds=1e-3 ) #, kilobytes=10)
+
+pred.list$measurements$kilobytes = NA
+
+f = plot(pred.list) + 
+  scale_y_log10(name = "Computation Time (seconds)") +
+  scale_x_log10(name = "N = number of columns", limits = c(1, 100)) +
+  facet_null()
+
+ggsave("pred.list.plot.png", plot = f, width = 5, height = 3, unit = "in", dpi = 300)
+
+```
+
+
+
+second_example_Comparative_Benchmarking
+
+```{r}
+
+library(Matrix)
+len <- function(x)data.frame(length=length(x))
+vec.mat.result <- atime::atime(
+  N=10^seq(1,7,by=0.25),
+  vector=len(numeric(N)),
+  matrix=len(matrix(0, N, N)),
+  Matrix=len(Matrix(0, N, N)),
+  result=TRUE)
+
+r = plot(vec.mat.result)
+
+ggsave("vec.mat.result.plot.png", plot = r, width = 5, height = 3, unit = "in", dpi = 300)
+```
+
+
+
