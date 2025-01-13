@@ -18,14 +18,6 @@ library(directlabels)
 ```
 
 
-```{r}
-   atime.colors.1 <- c(#RColorBrewer::brewer.pal(7, "Dark2")
-      Before="#66A61E",
-      Regression="#E6AB02", 
-      Fixed="#A6761D"
-    )
-```
-
 
 ```{r}
    atime.colors.2 <- c(#RColorBrewer::brewer.pal(7, "Dark2")
@@ -102,50 +94,13 @@ png("atime.list.5427.png",res = 600, width = 5, height = 3, unit = "in")
 atime.list.5427 = ggplot()+
   geom_line(aes(x = N, y = median, group = expr.name, colour = expr.name), data =  atime.list.5427$measurements)+
   geom_ribbon(aes(x = N, ymin = min, ymax = max, fill = expr.name), data = atime.list.5427$measurements, alpha = 0.5 )+
-  scale_x_log10("N = number of rows",limits = c(1e1, 1e7), breaks = 10^seq(1,7))+
-  scale_y_log10("Computational Time (Seconds)")+
+  scale_x_log10("N = number of columns",limits = c(1e1, 1e8), breaks = 10^seq(1,7))+
+  scale_y_log10("Computation Time (Seconds)")+
   scale_fill_manual(values=atime.colors.2)+
   scale_color_manual(values=atime.colors.2)
-directlabels::direct.label(atime.list.5427, list(cex = 0.5, "right.polygons"))
+directlabels::direct.label(atime.list.5427, list(cex = 1, "right.polygons"))
 dev.off()
 ```
-
-
-3 code Branches
-
-```{r}
-atime.list.4200 <- atime::atime_versions(
-pkg.path="C:/Users/amoak/data.table",
-pkg.edit.fun=pkg.edit.fun,
-  N=10^seq(1,7,by = 0.25),
-  setup={ 
-    set.seed(108)
-    d <- data.table(
-      id3 = sample(c(seq.int(N*0.9), sample(N*0.9, N*0.1, TRUE))),
-      v1 = sample(5L, N, TRUE),
-      v2 = sample(5L, N, TRUE))
-  },
-  expr=data.table:::`[.data.table`(d, , (max(v1)-min(v2)), by = id3),
-"Before"="793f8545c363d222de18ac892bc7abb80154e724",
-  "Regression"="c152ced0e5799acee1589910c69c1a2c6586b95d", 
-  "Fixed"="f750448a2efcd258b3aba57136ee6a95ce56b302")
-```
-
-
-```{r}
-png("atime.list.4200.png",res = 600, width = 5, height = 3, unit = "in")
-atime.list.4200 = ggplot()+
-  geom_line(aes(x = N, y = median, group = expr.name, colour = expr.name), data =  atime.list.4200$measurements)+
-  geom_ribbon(aes(x = N, ymin = min, ymax = max, fill = expr.name), data = atime.list.4200$measurements, alpha = 0.5 )+
-  scale_x_log10("N = number of rows",limits = c(1e1, 1e5), breaks = 10^seq(1,7))+
-  scale_y_log10("Computational Time (Seconds)")+
-  scale_fill_manual(values=atime.colors.1)+
-  scale_color_manual(values=atime.colors.1)
-directlabels::direct.label(atime.list.4200, list(cex = 1, "right.polygons"))
-
-dev.off()
-```
-
 
 
 
@@ -175,21 +130,11 @@ png("GitHub.action.test.png", res = 600, width = 15, height = 10, unit = "in")
 GitHub.action.test = ggplot() +
   geom_line(aes(x = N, y = median, group = expr.name, colour = expr.name), data = atime.result$measurements) +
   geom_ribbon(aes(x = N, ymin = min, ymax = max, fill = expr.name), data = atime.result$measurements, alpha = 0.5) +
-  theme(
-    plot.title = element_text(size = 30),
-    text = element_text(size = 30)
-  ) +
-  scale_x_log10("N = number of rows", limits = c(NA, 1e8),breaks = c(1, 10, 100, 1000, 10000, 100000, 1e6, 1e7)) +
-  scale_y_log10("Computational Time (Seconds)")+
+  scale_x_log10("N = number of columns", limits = c(NA, 1e8),breaks = c(1, 10, 100, 1000, 10000, 100000, 1e6, 1e7)) +
+  scale_y_log10("Computation Time (Seconds)")+
   scale_fill_manual(values=atime.colors)+
   scale_color_manual(values=atime.colors)
 directlabels::direct.label(GitHub.action.test, list(cex = 3, "right.polygons")) 
 dev.off()
-```
-
-```{r}
-expr=data.table.c4a2085e35689a108d67dacb2f8261e4964d7e12:::setDT(DT)
-
-expr=data.table.793f8545c363d222de18ac892bc7abb80154e724:::`[.data.table`(d, , (max(v1)-min(v2)), by = id3)
 ```
 

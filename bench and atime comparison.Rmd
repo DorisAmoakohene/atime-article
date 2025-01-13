@@ -101,9 +101,6 @@ dev.off()
 ```
 
 
-```{r}
-directlabels::direct.label(k, list(cex = 0.8, "right.polygons"))
-```
 
 
 
@@ -113,47 +110,6 @@ directlabels::direct.label(k, list(cex = 0.8, "right.polygons"))
 
 
 
-
-
-
-
-
-
-
-
-
-```{r}
-library(ggplot2)
-library(directlabels)
-
-# Assuming gg is your plot object
-gg <- plot(empirical_comparison_atime)
-
-# Add direct labels to the plot
-gg <- gg + geom_dl(aes(label = perl.values), method = "last.points")
-
-# Remove the legend
-gg <- gg + theme(legend.position = "none")
-
-# Save the plot
-ggsave("empirical_comparison_atime.png", plot = gg, width = 5, height = 5, dpi = 300)
-
-```
-
-
-```{r}
-plot(empirical_comparison_atime)
-
-png("empirical_comparison_atime",res = 300, width = 5, height = 3, unit = "in")
-plot(empirical_comparison_atime)
-dev.off()
-
-```
-
-
-```{r}
-
-```
 
 
 
