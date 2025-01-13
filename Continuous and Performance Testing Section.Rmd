@@ -126,7 +126,7 @@ atime.result <- atime::atime_versions(
 
 
 ```{r}
-png("GitHub.action.test.png", res = 600, width = 15, height = 10, unit = "in")
+png("GitHub.action.test.png", res = 600, width = 5, height = 3, unit = "in")
 GitHub.action.test = ggplot() +
   geom_line(aes(x = N, y = median, group = expr.name, colour = expr.name), data = atime.result$measurements) +
   geom_ribbon(aes(x = N, ymin = min, ymax = max, fill = expr.name), data = atime.result$measurements, alpha = 0.5) +
@@ -134,7 +134,7 @@ GitHub.action.test = ggplot() +
   scale_y_log10("Computation Time (Seconds)")+
   scale_fill_manual(values=atime.colors)+
   scale_color_manual(values=atime.colors)
-directlabels::direct.label(GitHub.action.test, list(cex = 3, "right.polygons")) 
+directlabels::direct.label(GitHub.action.test, list(cex = 1, "right.polygons")) 
 dev.off()
 ```
 
