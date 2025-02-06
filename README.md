@@ -11,3 +11,24 @@ This repository contains source files, figures, and code used for benchmarking a
 [Figures/:](https://github.com/DorisAmoakohene/atime-article/tree/main/Figures) Stores output figures generated from the .Rmd scripts.
 
 [Paper Source Files/:](https://github.com/DorisAmoakohene/atime-article/tree/main/Paper%20source%20Files) Includes LaTeX or other documentation source files related to the project.
+
+
+# How to Reproduce the Figures
+Each `.Rmd` file is structured to generate specific figures. To reproduce the results, follow these steps:
+
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/your-repo-name.git
+   cd your-repo-name
+   ```
+   
+2. Open the corresponding .Rmd file in RStudio or run it using:
+
+```
+rmarkdown::render("Codes/<filename>.Rmd")
+# eg. rmarkdown::render("Codes/Continuous_and_Performance_Testing_Section.Rmd")
+```
+
+3. The figures will be generated and saved.
+
+
