@@ -31,4 +31,18 @@ rmarkdown::render("Codes/<filename>.Rmd")
 
 3. The figures will be generated and saved.
 
+# 📊 Performance Benchmarking & Computational Analysis  
+
+
+## Figures & Code Overview  
+
+- [**Figure 1**:](https://github.com/DorisAmoakohene/atime-article/blob/main/Figures/create_subject_pattern_atime.png) Comparing PCRE vs. TRE for regex. [Rcode to replicate](https://github.com/DorisAmoakohene/atime-article/blob/main/codes/Comparative_Benchmarking_section.Rmd)
+  
+- [**Figure 2**:](https://github.com/DorisAmoakohene/atime-article/blob/main/Figures/create_subject_pattern_best.png) Computation time vs. input size N. Empirical timings (black), theoretical growth (purple). [Rcode to replicate](https://github.com/DorisAmoakohene/atime-article/blob/main/codes/Comparative_Benchmarking_section.Rmd)
+  
+- [**Figure 3**:](https://github.com/DorisAmoakohene/atime-article/blob/main/Figures/create_subject_pattern_pred.png) Maximum regex subject/pattern size processed within 0.01s.  [Rcode to replicate](https://github.com/DorisAmoakohene/atime-article/blob/main/codes/Comparative_Benchmarking_section.Rmd)
+  
+- [**Figure 4**:](https://github.com/DorisAmoakohene/atime-article/blob/main/Figures/vec.mat.result.plot.png) Memory usage, object length, and execution time for vector, dense, and sparse matrices. [Rcode to replicate](https://github.com/DorisAmoakohene/atime-article/blob/main/codes/Comparative_Benchmarking_section.Rmd)
+  
+- [**Figure 5a**:](https://github.com/DorisAmoakohene/atime-article/blob/main/Figures/data.table-atime_versions.png) Profiling `shallow()` copy in data tables—constant time in **Fast** vs. **Slow** versions, validated via GitHub PR checks [**Figure 5b**:](https://github.com/DorisAmoakohene/atime-article/blob/main/Figures/data.table-atime_test.png).  [Rcode to replicate](https://github.com/DorisAmoakohene/atime-article/blob/main/codes/Continuous_and_Performance_Testing_Section.Rmd)
 
